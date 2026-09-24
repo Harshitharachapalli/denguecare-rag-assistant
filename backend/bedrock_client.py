@@ -93,18 +93,11 @@ def _mock_answer(question: str, context: str) -> str:
             best_line, best_score = clean, score
 
     if best_line:
-        answer_line = best_line
-    else:
-        snippet = context.strip().replace("\n", " ")
-        answer_line = (snippet[:300] + "...") if len(snippet) > 300 else snippet
+        return f"According to the report, {best_line.strip()}"
 
-    return (
-        f"Based on the report, the relevant information is:\n\n"
-        f"    {answer_line}\n\n"
-        "(Demo mode: answer extracted directly from the retrieved report text. "
-        "Set RAG_MODE=local or kb in .env with AWS credentials for a full "
-        "Bedrock-generated natural-language answer.)"
-    )
+    snippet = context.strip().replace("\n", " ")
+    snippet = (snippet[:300] + "...") if len(snippet) > 300 else snippet
+    return f"Here is the most relevant part of the report: {snippet}"
 
 
 def generate_answer(question: str, context: str) -> str:
