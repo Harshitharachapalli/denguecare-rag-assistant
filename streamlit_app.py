@@ -169,8 +169,19 @@ with col_report:
 with col_main:
     st.markdown("#### Question")
 
+    sample_questions = [
+        "What is the platelet count?",
+        "Is the NS1 antigen positive?",
+        "Is there an active dengue infection?",
+        "What is the total WBC count?",
+        "What does the interpretation say?",
+    ]
+    chosen = st.selectbox("Sample questions", ["Type your own..."] + sample_questions)
+    default_q = "" if chosen == "Type your own..." else chosen
+
     question = st.text_input(
         "Question",
+        value=default_q,
         placeholder="For example: What is the platelet count?",
         label_visibility="collapsed",
     )
