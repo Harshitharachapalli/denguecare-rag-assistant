@@ -62,17 +62,48 @@ def embed(text: str) -> list[float]:
 # --------------------------------------------------------------------------- #
 # Text generation
 # --------------------------------------------------------------------------- #
+_STOPWORDS = {
+    "what", "is", "the", "a", "an", "of", "in", "for", "and", "to", "does",
+    "do", "are", "this", "that", "report", "patient", "value", "result",
+    "was", "were", "how", "much", "many", "there", "any", "please", "tell",
+    "me", "about", "s", "count",
+}
+
+
 def _mock_answer(question: str, context: str) -> str:
-    """Rule-based grounded answer used when Bedrock is unavailable."""
-    snippet = context.strip().replace("\n", " ")
-    if len(snippet) > 500:
-        snippet = snippet[:500] + "..."
+    """Rule-based grounded answer used when Bedrock is unavailable.
+
+    Picks the single most relevant line from the retrieved context by keyword
+    overlap with the question, so the demo shows a clean, specific answer even
+    without an AWS call.
+    """
+    keywords = {
+        w.strip("?.,:;()").lower()
+        for w in question.split()
+        if w.strip("?.,:;()").lower() not in _STOPWORDS and len(w) > 2
+    }
+
+    best_line, best_score = "", 0
+    for line in context.splitlines():
+        clean = line.strip()
+        if not clean or clean.startswith(("---", "===")):
+            continue
+        score = sum(1 for kw in keywords if kw in clean.lower())
+        if score > best_score:
+            best_line, best_score = clean, score
+
+    if best_line:
+        answer_line = best_line
+    else:
+        snippet = context.strip().replace("\n", " ")
+        answer_line = (snippet[:300] + "...") if len(snippet) > 300 else snippet
+
     return (
-        "[MOCK MODE - no AWS call was made]\n\n"
-        f"Based on the retrieved report content, here is what is relevant to "
-        f'your question "{question}":\n\n{snippet}\n\n'
-        "Enable real Bedrock by setting RAG_MODE=local (or kb) in .env once "
-        "model access is approved."
+        f"Based on the report, the relevant information is:\n\n"
+        f"    {answer_line}\n\n"
+        "(Demo mode: answer extracted directly from the retrieved report text. "
+        "Set RAG_MODE=local or kb in .env with AWS credentials for a full "
+        "Bedrock-generated natural-language answer.)"
     )
 
 

@@ -62,7 +62,40 @@ Knowledge Base is live — same UI, same API contract.
 
 ---
 
-## Run locally (any mode)
+## Streamlit UI (recommended)
+
+A polished Streamlit interface (`streamlit_app.py`) reuses the same backend RAG
+logic. It has a sidebar to pick/upload reports, example questions, a grounded
+answer panel, retrieved-evidence expanders, and PII-redaction indicators.
+
+```powershell
+python -m pip install -r requirements.txt
+Copy-Item .env.example .env        # defaults to RAG_MODE=mock
+python -m streamlit run streamlit_app.py
+# opens http://localhost:8501
+```
+
+### Deploy free on Streamlit Community Cloud
+
+1. Push this repo to GitHub (already done).
+2. Go to https://share.streamlit.io → **New app**.
+3. Pick the repo `denguecare-rag-assistant`, branch `main`, main file
+   `streamlit_app.py`.
+4. Under **Advanced settings → Secrets**, add env values (optional):
+   ```toml
+   RAG_MODE = "mock"
+   AWS_REGION = "us-east-1"
+   ```
+   For real Bedrock (`local`/`kb`), add AWS credentials as secrets and set the
+   matching `RAG_MODE`, `KB_ID`, etc.
+5. Click **Deploy**. You get a public URL like
+   `https://<app-name>.streamlit.app`.
+
+> Streamlit Cloud reads `requirements.txt` automatically, so no extra setup.
+
+---
+
+## Run locally (FastAPI, any mode)
 
 ```powershell
 # 1. Install dependencies
