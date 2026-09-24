@@ -1,35 +1,34 @@
 SYNTHETIC DENGUE TEST REPORT (SAMPLE - NOT REAL PATIENT DATA)
 ==============================================================
 Report ID       : SYN-DENG-0002
-Patient (alias) : Patient B
-Age / Sex       : 41 / Male
-Collection Date : 2026-09-14
-Reporting Lab   : Synthetic Diagnostics (Demo)
+Patient (alias) : Patient 002
+Age / Sex       : 27 / Female
+Location        : Mumbai (synthetic)
+Collection Date : 2026-09-05
+Reporting Lab   : MockMed Clinical Laboratory
 
 CLINICAL HISTORY
 ----------------
-Mild fever for 2 days, resolving. Routine follow-up.
+Fever for 2 day(s). Reported symptoms: retro-orbital pain, headache, nausea.
 
 SEROLOGY / ANTIGEN
 ------------------
-Dengue NS1 Antigen      : NEGATIVE
-Dengue IgM Antibody     : NEGATIVE
-Dengue IgG Antibody     : POSITIVE (past exposure)
+Dengue NS1 Antigen      : POSITIVE
+Dengue IgM Antibody     : POSITIVE
+Dengue IgG Antibody     : NEGATIVE
 
 COMPLETE BLOOD COUNT
 --------------------
-Hemoglobin              : 14.5 g/dL   (Ref 13.0 - 17.0)
-Total WBC Count         : 6,800 /uL    (Ref 4,000 - 11,000)  NORMAL
-Platelet Count          : 210,000 /uL  (Ref 150,000 - 410,000)  NORMAL
-Hematocrit (PCV)        : 44%          (Ref 40 - 50)
+Hemoglobin              : 12.5 g/dL     (Ref 12.0 - 16.0)
+Total WBC Count         : 3,531 /uL    (Ref 4,000 - 11,000)  LOW
+Platelet Count          : 111,506 /uL   (Ref 150,000 - 410,000)  LOW
+Hematocrit (PCV)        : 38%          (Ref 36 - 50)
 
 INTERPRETATION
 --------------
-NS1 and IgM negative with normal platelet and WBC counts. IgG positive
-suggests past dengue exposure rather than active infection. No evidence of
-acute dengue in this sample.
+NS1 positive with thrombocytopenia (low platelets) is consistent with an acute dengue infection. Close monitoring is advised.
 
 RECOMMENDATION (INFORMATIONAL ONLY)
 -----------------------------------
-No acute action indicated in this synthetic scenario. This is synthetic
-demonstration data and not medical advice.
+Clinical correlation advised. This is synthetic demonstration data and not
+medical advice.

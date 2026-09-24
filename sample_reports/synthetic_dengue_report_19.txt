@@ -1,28 +1,28 @@
 SYNTHETIC DENGUE TEST REPORT (SAMPLE - NOT REAL PATIENT DATA)
 ==============================================================
-Report ID       : SYN-DENG-0001
-Patient (alias) : Patient 001
-Age / Sex       : 16 / Male
+Report ID       : SYN-DENG-0019
+Patient (alias) : Patient 019
+Age / Sex       : 8 / Female
 Location        : Bengaluru (synthetic)
-Collection Date : 2026-09-02
-Reporting Lab   : DemoCare Pathology Labs
+Collection Date : 2026-08-18
+Reporting Lab   : TestData Diagnostics Center
 
 CLINICAL HISTORY
 ----------------
-Fever for 2 day(s). Reported symptoms: headache, rash.
+Fever for 4 day(s). Reported symptoms: nausea, rash.
 
 SEROLOGY / ANTIGEN
 ------------------
 Dengue NS1 Antigen      : POSITIVE
-Dengue IgM Antibody     : POSITIVE
+Dengue IgM Antibody     : NEGATIVE
 Dengue IgG Antibody     : NEGATIVE
 
 COMPLETE BLOOD COUNT
 --------------------
-Hemoglobin              : 10.7 g/dL     (Ref 12.0 - 16.0)
-Total WBC Count         : 3,528 /uL    (Ref 4,000 - 11,000)  LOW
-Platelet Count          : 97,397 /uL   (Ref 150,000 - 410,000)  LOW
-Hematocrit (PCV)        : 36%          (Ref 36 - 50)
+Hemoglobin              : 14.1 g/dL     (Ref 12.0 - 16.0)
+Total WBC Count         : 2,080 /uL    (Ref 4,000 - 11,000)  LOW
+Platelet Count          : 44,356 /uL   (Ref 150,000 - 410,000)  LOW
+Hematocrit (PCV)        : 41%          (Ref 36 - 50)
 
 INTERPRETATION
 --------------

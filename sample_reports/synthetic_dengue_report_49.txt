@@ -1,0 +1,34 @@
+SYNTHETIC DENGUE TEST REPORT (SAMPLE - NOT REAL PATIENT DATA)
+==============================================================
+Report ID       : SYN-DENG-0049
+Patient (alias) : Patient 049
+Age / Sex       : 73 / Male
+Location        : Pune (synthetic)
+Collection Date : 2026-08-20
+Reporting Lab   : MockMed Clinical Laboratory
+
+CLINICAL HISTORY
+----------------
+Fever for 3 day(s). Reported symptoms: joint pain, nausea, rash, fatigue.
+
+SEROLOGY / ANTIGEN
+------------------
+Dengue NS1 Antigen      : NEGATIVE
+Dengue IgM Antibody     : NEGATIVE
+Dengue IgG Antibody     : NEGATIVE
+
+COMPLETE BLOOD COUNT
+--------------------
+Hemoglobin              : 11.8 g/dL     (Ref 12.0 - 16.0)
+Total WBC Count         : 6,910 /uL    (Ref 4,000 - 11,000)  NORMAL
+Platelet Count          : 179,393 /uL   (Ref 150,000 - 410,000)  NORMAL
+Hematocrit (PCV)        : 41%          (Ref 36 - 50)
+
+INTERPRETATION
+--------------
+NS1, IgM and IgG negative with normal platelet and WBC counts. No serological evidence of dengue in this sample.
+
+RECOMMENDATION (INFORMATIONAL ONLY)
+-----------------------------------
+Clinical correlation advised. This is synthetic demonstration data and not
+medical advice.
