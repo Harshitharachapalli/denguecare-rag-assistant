@@ -80,27 +80,99 @@ if "history" not in st.session_state:
 st.markdown(
     """
     <style>
-      .app-title { font-size: 2rem; font-weight: 700; margin-bottom: .1rem; }
-      .app-sub { color: #64748b; margin-bottom: 1rem; }
+      /* ---- App background: soft medical gradient ---- */
+      .stApp {
+        background: linear-gradient(160deg, #eef4ff 0%, #f6f9ff 40%, #eaf7f3 100%);
+        background-attachment: fixed;
+      }
+      /* Constrain content width and add breathing room */
+      .block-container { padding-top: 1.2rem; max-width: 1200px; }
+
+      /* ---- Hero header banner ---- */
+      .hero {
+        background: linear-gradient(120deg, #1e3a8a 0%, #2563eb 55%, #0ea5e9 100%);
+        color: #fff;
+        padding: 26px 32px;
+        border-radius: 18px;
+        box-shadow: 0 12px 30px rgba(30, 58, 138, .25);
+        margin-bottom: 22px;
+      }
+      .hero h1 { margin: 0; font-size: 1.9rem; font-weight: 800; letter-spacing: -.5px; }
+      .hero p { margin: 6px 0 0; opacity: .92; font-size: 1rem; max-width: 720px; }
+      .hero .chips { margin-top: 14px; }
+      .chip {
+        display:inline-block; background: rgba(255,255,255,.18);
+        border: 1px solid rgba(255,255,255,.25);
+        padding: 5px 14px; border-radius: 999px; font-size: .8rem;
+        font-weight: 600; margin-right: 8px; backdrop-filter: blur(4px);
+      }
+
+      /* ---- Section card look for columns ---- */
+      div[data-testid="column"] > div {
+        background: rgba(255,255,255,.72);
+        border: 1px solid rgba(148,163,184,.25);
+        border-radius: 16px;
+        padding: 20px 22px;
+        box-shadow: 0 6px 20px rgba(30,41,59,.06);
+        backdrop-filter: blur(6px);
+      }
+
+      h2, h3 { color: #1e293b; }
+
+      /* ---- Answer box ---- */
       .answer-box {
-        background: #eff6ff; border-left: 5px solid #2563eb;
-        padding: 16px 18px; border-radius: 10px; font-size: 1.02rem;
-        line-height: 1.55; white-space: pre-wrap;
+        background: linear-gradient(135deg, #eff6ff, #ecfeff);
+        border-left: 5px solid #2563eb;
+        padding: 18px 20px; border-radius: 12px; font-size: 1.05rem;
+        line-height: 1.6; white-space: pre-wrap; color: #0f172a;
+        box-shadow: 0 4px 14px rgba(37,99,235,.10);
       }
+      .qhead {
+        font-weight: 700; color: #1e3a8a; font-size: 1.05rem;
+        margin: 6px 0 8px;
+      }
+
+      /* ---- Evidence chunks ---- */
       .evi {
-        background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px;
-        padding: 10px 12px; margin-bottom: 8px; font-size: .85rem;
-        white-space: pre-wrap;
+        background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px;
+        padding: 11px 13px; margin-bottom: 9px; font-size: .85rem;
+        white-space: pre-wrap; color: #334155;
       }
-      .evi .score { color: #059669; font-weight: 600; }
-      .pill {
-        display:inline-block; background:#dbeafe; color:#1e3a8a;
-        padding:3px 12px; border-radius:999px; font-size:.8rem; font-weight:600;
-      }
+      .evi .score { color: #059669; font-weight: 700; }
+
+      /* ---- Pills ---- */
       .warnpill {
         display:inline-block; background:#fef3c7; color:#b45309;
-        padding:3px 12px; border-radius:999px; font-size:.8rem; font-weight:600;
+        padding:4px 13px; border-radius:999px; font-size:.8rem; font-weight:700;
+        margin: 6px 0;
       }
+
+      /* ---- Primary button ---- */
+      .stButton > button {
+        border-radius: 10px; font-weight: 600; border: 0;
+        transition: transform .05s ease, box-shadow .15s ease;
+      }
+      .stButton > button[kind="primary"] {
+        background: linear-gradient(120deg, #2563eb, #0ea5e9);
+        box-shadow: 0 6px 16px rgba(37,99,235,.35);
+      }
+      .stButton > button:hover { transform: translateY(-1px); }
+
+      /* ---- Inputs ---- */
+      .stTextInput input, .stSelectbox div[data-baseweb="select"] {
+        border-radius: 10px;
+      }
+
+      /* ---- Sidebar ---- */
+      section[data-testid="stSidebar"] {
+        background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
+      }
+      section[data-testid="stSidebar"] * { color: #e2e8f0 !important; }
+      section[data-testid="stSidebar"] .stButton > button {
+        background: #2563eb; color: #fff !important;
+      }
+
+      footer, #MainMenu { visibility: hidden; }
     </style>
     """,
     unsafe_allow_html=True,
@@ -169,11 +241,20 @@ with st.sidebar:
 # --------------------------------------------------------------------------- #
 # Main area
 # --------------------------------------------------------------------------- #
-st.markdown('<div class="app-title">🩺 DengueCare RAG Assistant</div>', unsafe_allow_html=True)
 st.markdown(
-    '<div class="app-sub">Ask questions about a dengue test report. Answers are '
-    "grounded in the report using Retrieval-Augmented Generation + Amazon Bedrock."
-    "</div>",
+    """
+    <div class="hero">
+      <h1>🩺 DengueCare RAG Assistant</h1>
+      <p>Ask natural-language questions about a dengue test report. Answers are
+      grounded in the report using Retrieval-Augmented Generation and Amazon Bedrock.</p>
+      <div class="chips">
+        <span class="chip">🔎 RAG retrieval</span>
+        <span class="chip">🧠 Amazon Bedrock</span>
+        <span class="chip">🔐 PII redaction</span>
+        <span class="chip">📄 Synthetic data</span>
+      </div>
+    </div>
+    """,
     unsafe_allow_html=True,
 )
 
@@ -236,7 +317,7 @@ with col_main:
 
     # Render conversation history (most recent first)
     for q, a, evi, pii_found in st.session_state.history:
-        st.markdown(f"**Q: {q}**")
+        st.markdown(f'<div class="qhead">❓ {q}</div>', unsafe_allow_html=True)
         st.markdown(f'<div class="answer-box">{a}</div>', unsafe_allow_html=True)
         if pii_found:
             st.markdown(
