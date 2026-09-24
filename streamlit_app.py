@@ -51,28 +51,115 @@ def extract_uploaded(file) -> str:
     return file.read().decode("utf-8", errors="ignore")
 
 
-def summarize_report(text: str) -> dict:
-    """Pull a few key fields from a report for a quick summary panel.
+import re
 
-    Returns a dict of label -> value (only fields that were found).
+
+def parse_report(text: str) -> dict:
+    """Parse a dengue report into structured fields, ranges, and status.
+
+    Returns:
+      {
+        "meta": {"Report ID":..., "Collection date":..., "Age / Sex":...},
+        "rows": [ {test, value, range, status, verdict}, ... ],
+        "assessment": str,   # overall plain-language conclusion
+      }
     """
-    fields = {
-        "Report ID": r"Report ID\s*:\s*(.+)",
-        "Collection date": r"Collection Date\s*:\s*(.+)",
-        "NS1 antigen": r"NS1 Antigen\s*:\s*(\w+)",
-        "IgM antibody": r"IgM Antibody\s*:\s*(\w+)",
-        "IgG antibody": r"IgG Antibody\s*:\s*(\w+)",
-        "Platelet count": r"Platelet Count\s*:\s*([\d,]+ /uL[^\n(]*)",
-        "WBC count": r"Total WBC Count\s*:\s*([\d,]+ /uL[^\n(]*)",
-    }
-    import re
+    def find(pattern):
+        m = re.search(pattern, text, re.IGNORECASE)
+        return m.group(1).strip() if m else None
 
-    found = {}
-    for label, pat in fields.items():
-        m = re.search(pat, text, re.IGNORECASE)
-        if m:
-            found[label] = m.group(1).strip()
-    return found
+    def num(s):
+        try:
+            return float(s.replace(",", "")) if s else None
+        except ValueError:
+            return None
+
+    meta = {
+        "Report ID": find(r"Report ID\s*:\s*(.+)"),
+        "Age / Sex": find(r"Age / Sex\s*:\s*(.+)"),
+        "Collection date": find(r"Collection Date\s*:\s*(.+)"),
+        "Lab": find(r"Reporting Lab\s*:\s*(.+)"),
+    }
+    meta = {k: v for k, v in meta.items() if v}
+
+    rows = []
+
+    # --- Serology / antigen: qualitative POSITIVE/NEGATIVE ---
+    serology = {
+        "NS1 Antigen": find(r"NS1 Antigen\s*:\s*(\w+)"),
+        "IgM Antibody": find(r"IgM Antibody\s*:\s*(\w+)"),
+        "IgG Antibody": find(r"IgG Antibody\s*:\s*(\w+)"),
+    }
+    for test, val in serology.items():
+        if not val:
+            continue
+        val_up = val.upper()
+        if val_up == "POSITIVE":
+            # NS1 / IgM positive => active concern (Alert); IgG positive => past exposure (Watch)
+            status = "Positive"
+            verdict = "Watch" if test == "IgG Antibody" else "Alert"
+        else:
+            status, verdict = "Negative", "Good"
+        rows.append({"test": test, "value": val_up, "range": "Negative", "status": status, "verdict": verdict})
+
+    # --- Numeric CBC values with ranges ---
+    plt = num(find(r"Platelet Count\s*:\s*([\d,]+)"))
+    if plt is not None:
+        if plt < 150000:
+            status, verdict = "Low", "Alert"
+        elif plt > 410000:
+            status, verdict = "High", "Watch"
+        else:
+            status, verdict = "Normal", "Good"
+        rows.append({"test": "Platelet Count", "value": f"{int(plt):,} /uL",
+                     "range": "150,000 - 410,000", "status": status, "verdict": verdict})
+
+    wbc = num(find(r"Total WBC Count\s*:\s*([\d,]+)"))
+    if wbc is not None:
+        if wbc < 4000:
+            status, verdict = "Low", "Watch"
+        elif wbc > 11000:
+            status, verdict = "High", "Watch"
+        else:
+            status, verdict = "Normal", "Good"
+        rows.append({"test": "Total WBC Count", "value": f"{int(wbc):,} /uL",
+                     "range": "4,000 - 11,000", "status": status, "verdict": verdict})
+
+    hb = num(find(r"Hemoglobin\s*:\s*([\d.]+)"))
+    if hb is not None:
+        if hb < 12.0:
+            status, verdict = "Low", "Watch"
+        elif hb > 16.0:
+            status, verdict = "High", "Watch"
+        else:
+            status, verdict = "Normal", "Good"
+        rows.append({"test": "Hemoglobin", "value": f"{hb} g/dL",
+                     "range": "12.0 - 16.0", "status": status, "verdict": verdict})
+
+    hct = num(find(r"Hematocrit \(PCV\)\s*:\s*(\d+)"))
+    if hct is not None:
+        if hct < 36:
+            status, verdict = "Low", "Watch"
+        elif hct > 50:
+            status, verdict = "High", "Watch"
+        else:
+            status, verdict = "Normal", "Good"
+        rows.append({"test": "Hematocrit (PCV)", "value": f"{int(hct)}%",
+                     "range": "36 - 50", "status": status, "verdict": verdict})
+
+    # --- Overall assessment from serology + platelets ---
+    ns1 = (serology.get("NS1 Antigen") or "").upper()
+    igm = (serology.get("IgM Antibody") or "").upper()
+    igg = (serology.get("IgG Antibody") or "").upper()
+    if ns1 == "POSITIVE" or igm == "POSITIVE":
+        assessment = ("Findings are consistent with an ACTIVE dengue infection"
+                      + (" with low platelets." if plt and plt < 150000 else "."))
+    elif igg == "POSITIVE":
+        assessment = "Findings suggest PAST dengue exposure rather than an active infection."
+    else:
+        assessment = "No serological evidence of dengue in this sample."
+
+    return {"meta": meta, "rows": rows, "assessment": assessment}
 
 
 # Session state
@@ -108,19 +195,32 @@ st.markdown(
         white-space: pre-wrap;
       }
       .muted { color: #6b7280; font-size: .9rem; }
-      .report-view {
-        background: #0f172a;
-        color: #e2e8f0;
-        font-family: "Consolas", "Courier New", monospace;
-        font-size: .82rem;
-        line-height: 1.45;
-        white-space: pre;
-        overflow-x: auto;
-        padding: 14px 16px;
-        border-radius: 6px;
-        max-height: 360px;
-        overflow-y: auto;
+
+      table.rpt {
+        width: 100%; border-collapse: collapse; font-size: .9rem;
+        margin: 6px 0 10px;
       }
+      table.rpt th {
+        text-align: left; background: #f1f5f9; color: #334155;
+        padding: 8px 10px; border-bottom: 2px solid #e2e8f0; font-weight: 600;
+      }
+      table.rpt td {
+        padding: 8px 10px; border-bottom: 1px solid #eef2f7; color: #1f2937;
+      }
+      .badge {
+        display: inline-block; padding: 2px 10px; border-radius: 999px;
+        font-size: .78rem; font-weight: 600;
+      }
+      .b-good  { background: #dcfce7; color: #15803d; }
+      .b-watch { background: #fef9c3; color: #a16207; }
+      .b-alert { background: #fee2e2; color: #b91c1c; }
+      .assess {
+        border-radius: 6px; padding: 10px 14px; font-size: .92rem;
+        margin: 8px 0 4px;
+      }
+      .assess-alert { background: #fef2f2; border: 1px solid #fecaca; color: #991b1b; }
+      .assess-watch { background: #fffbeb; border: 1px solid #fde68a; color: #92400e; }
+      .assess-good  { background: #f0fdf4; border: 1px solid #bbf7d0; color: #166534; }
       #MainMenu, footer { visibility: hidden; }
     </style>
     """,
@@ -187,32 +287,75 @@ st.markdown(
 
 col_main, col_report = st.columns([3, 2], gap="large")
 
+_BADGE_CLASS = {"Good": "b-good", "Watch": "b-watch", "Alert": "b-alert"}
+
+
+def recommendations_for(parsed: dict) -> list[str]:
+    """Plain-language recommendations derived from the parsed results."""
+    recs = []
+    by_test = {r["test"]: r for r in parsed["rows"]}
+
+    plt = by_test.get("Platelet Count")
+    if plt and plt["status"] == "Low":
+        recs.append("Platelets are low. Repeat CBC monitoring is advised.")
+    wbc = by_test.get("Total WBC Count")
+    if wbc and wbc["status"] == "Low":
+        recs.append("WBC count is low, which can occur in dengue. Monitor as advised.")
+
+    if "ACTIVE" in parsed["assessment"]:
+        recs.append("Serology indicates active infection. Follow clinical guidance and stay hydrated.")
+    elif "PAST" in parsed["assessment"]:
+        recs.append("Results point to past exposure, not an active infection.")
+    else:
+        recs.append("No action indicated from these results in this synthetic scenario.")
+
+    if not any(r["verdict"] != "Good" for r in parsed["rows"]):
+        recs.insert(0, "All measured values are within normal ranges.")
+    return recs
+
+
 with col_report:
-    st.markdown("#### Report")
+    st.markdown("#### Report results")
     if st.session_state.doc_name:
-        summary = summarize_report(st.session_state.doc_text)
-        if summary:
-            st.markdown("**Summary**")
-            top = st.columns(3)
-            for i, key in enumerate(["NS1 antigen", "IgM antibody", "IgG antibody"]):
-                if key in summary:
-                    top[i].metric(key, summary[key])
-            bottom = st.columns(2)
-            for i, key in enumerate(["Platelet count", "WBC count"]):
-                if key in summary:
-                    bottom[i].metric(key, summary[key])
-            meta = [f"{k}: {summary[k]}" for k in ("Report ID", "Collection date")
-                    if k in summary]
-            if meta:
-                st.markdown(
-                    f'<span class="muted">{" &nbsp;|&nbsp; ".join(meta)}</span>',
-                    unsafe_allow_html=True,
+        parsed = parse_report(st.session_state.doc_text)
+
+        # Metadata line
+        if parsed["meta"]:
+            meta_txt = " &nbsp;|&nbsp; ".join(f"{k}: {v}" for k, v in parsed["meta"].items())
+            st.markdown(f'<span class="muted">{meta_txt}</span>', unsafe_allow_html=True)
+
+        # Results table
+        if parsed["rows"]:
+            html = ['<table class="rpt"><tr><th>Test</th><th>Result</th>'
+                    '<th>Reference</th><th>Status</th></tr>']
+            for r in parsed["rows"]:
+                cls = _BADGE_CLASS.get(r["verdict"], "b-watch")
+                html.append(
+                    f'<tr><td>{r["test"]}</td><td>{r["value"]}</td>'
+                    f'<td>{r["range"]}</td>'
+                    f'<td><span class="badge {cls}">{r["status"]}</span></td></tr>'
                 )
-            st.markdown("**Full report**")
+            html.append("</table>")
+            st.markdown("".join(html), unsafe_allow_html=True)
+
+        # Overall assessment
+        acls = ("assess-alert" if "ACTIVE" in parsed["assessment"]
+                else "assess-watch" if "PAST" in parsed["assessment"]
+                else "assess-good")
         st.markdown(
-            f'<div class="report-view">{st.session_state.doc_text.replace("<", "&lt;")}</div>',
+            f'<div class="assess {acls}"><b>Assessment:</b> {parsed["assessment"]}</div>',
             unsafe_allow_html=True,
         )
+
+        # Recommendations
+        st.markdown("**Recommendations**")
+        for rec in recommendations_for(parsed):
+            st.markdown(f"- {rec}")
+
+        # Full text kept available but tucked away
+        with st.expander("View original report text"):
+            st.text(st.session_state.doc_text)
+
     elif config.USE_KB:
         st.markdown('<span class="muted">Stored in the knowledge base.</span>',
                     unsafe_allow_html=True)
