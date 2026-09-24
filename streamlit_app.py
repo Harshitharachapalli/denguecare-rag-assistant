@@ -108,6 +108,19 @@ st.markdown(
         white-space: pre-wrap;
       }
       .muted { color: #6b7280; font-size: .9rem; }
+      .report-view {
+        background: #0f172a;
+        color: #e2e8f0;
+        font-family: "Consolas", "Courier New", monospace;
+        font-size: .82rem;
+        line-height: 1.45;
+        white-space: pre;
+        overflow-x: auto;
+        padding: 14px 16px;
+        border-radius: 6px;
+        max-height: 360px;
+        overflow-y: auto;
+      }
       #MainMenu, footer { visibility: hidden; }
     </style>
     """,
@@ -196,11 +209,9 @@ with col_report:
                     unsafe_allow_html=True,
                 )
             st.markdown("**Full report**")
-        st.text_area(
-            "Report",
-            st.session_state.doc_text,
-            height=300,
-            label_visibility="collapsed",
+        st.markdown(
+            f'<div class="report-view">{st.session_state.doc_text.replace("<", "&lt;")}</div>',
+            unsafe_allow_html=True,
         )
     elif config.USE_KB:
         st.markdown('<span class="muted">Stored in the knowledge base.</span>',
