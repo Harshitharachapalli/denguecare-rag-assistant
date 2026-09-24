@@ -51,6 +51,30 @@ def extract_uploaded(file) -> str:
     return file.read().decode("utf-8", errors="ignore")
 
 
+def summarize_report(text: str) -> dict:
+    """Pull a few key fields from a report for a quick summary panel.
+
+    Returns a dict of label -> value (only fields that were found).
+    """
+    fields = {
+        "Report ID": r"Report ID\s*:\s*(.+)",
+        "Collection date": r"Collection Date\s*:\s*(.+)",
+        "NS1 antigen": r"NS1 Antigen\s*:\s*(\w+)",
+        "IgM antibody": r"IgM Antibody\s*:\s*(\w+)",
+        "IgG antibody": r"IgG Antibody\s*:\s*(\w+)",
+        "Platelet count": r"Platelet Count\s*:\s*([\d,]+ /uL[^\n(]*)",
+        "WBC count": r"Total WBC Count\s*:\s*([\d,]+ /uL[^\n(]*)",
+    }
+    import re
+
+    found = {}
+    for label, pat in fields.items():
+        m = re.search(pat, text, re.IGNORECASE)
+        if m:
+            found[label] = m.group(1).strip()
+    return found
+
+
 # Session state
 for key, default in {
     "doc_id": None,
@@ -153,10 +177,29 @@ col_main, col_report = st.columns([3, 2], gap="large")
 with col_report:
     st.markdown("#### Report")
     if st.session_state.doc_name:
+        summary = summarize_report(st.session_state.doc_text)
+        if summary:
+            st.markdown("**Summary**")
+            top = st.columns(3)
+            for i, key in enumerate(["NS1 antigen", "IgM antibody", "IgG antibody"]):
+                if key in summary:
+                    top[i].metric(key, summary[key])
+            bottom = st.columns(2)
+            for i, key in enumerate(["Platelet count", "WBC count"]):
+                if key in summary:
+                    bottom[i].metric(key, summary[key])
+            meta = [f"{k}: {summary[k]}" for k in ("Report ID", "Collection date")
+                    if k in summary]
+            if meta:
+                st.markdown(
+                    f'<span class="muted">{" &nbsp;|&nbsp; ".join(meta)}</span>',
+                    unsafe_allow_html=True,
+                )
+            st.markdown("**Full report**")
         st.text_area(
             "Report",
             st.session_state.doc_text,
-            height=380,
+            height=300,
             label_visibility="collapsed",
         )
     elif config.USE_KB:
