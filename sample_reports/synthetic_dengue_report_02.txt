@@ -1,0 +1,35 @@
+SYNTHETIC DENGUE TEST REPORT (SAMPLE - NOT REAL PATIENT DATA)
+==============================================================
+Report ID       : SYN-DENG-0002
+Patient (alias) : Patient B
+Age / Sex       : 41 / Male
+Collection Date : 2026-09-14
+Reporting Lab   : Synthetic Diagnostics (Demo)
+
+CLINICAL HISTORY
+----------------
+Mild fever for 2 days, resolving. Routine follow-up.
+
+SEROLOGY / ANTIGEN
+------------------
+Dengue NS1 Antigen      : NEGATIVE
+Dengue IgM Antibody     : NEGATIVE
+Dengue IgG Antibody     : POSITIVE (past exposure)
+
+COMPLETE BLOOD COUNT
+--------------------
+Hemoglobin              : 14.5 g/dL   (Ref 13.0 - 17.0)
+Total WBC Count         : 6,800 /uL    (Ref 4,000 - 11,000)  NORMAL
+Platelet Count          : 210,000 /uL  (Ref 150,000 - 410,000)  NORMAL
+Hematocrit (PCV)        : 44%          (Ref 40 - 50)
+
+INTERPRETATION
+--------------
+NS1 and IgM negative with normal platelet and WBC counts. IgG positive
+suggests past dengue exposure rather than active infection. No evidence of
+acute dengue in this sample.
+
+RECOMMENDATION (INFORMATIONAL ONLY)
+-----------------------------------
+No acute action indicated in this synthetic scenario. This is synthetic
+demonstration data and not medical advice.

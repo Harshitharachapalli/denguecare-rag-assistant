@@ -1,0 +1,16 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+env/
+
+# Env / secrets
+.env
+
+# Uploaded reports (may contain user data)
+uploads/
+
+# OS
+.DS_Store
+Thumbs.db

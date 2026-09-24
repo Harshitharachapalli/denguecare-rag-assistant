@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dengue Report RAG Assistant</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <header>
+    <h1>🩺 Dengue Report RAG Assistant</h1>
+    <p class="subtitle">Upload a synthetic dengue test report and ask questions. Answers are grounded in your report using Amazon Bedrock + RAG.</p>
+    <span id="mode" class="badge">mode: …</span>
+  </header>
+
+  <main>
+    <section class="card">
+      <h2>1. Choose a report</h2>
+      <p class="hint">Pick a bundled synthetic report, or upload your own (.txt / .pdf).</p>
+
+      <div class="row">
+        <select id="sampleSelect">
+          <option value="">-- select a synthetic report --</option>
+        </select>
+        <button id="selectBtn">Use this report</button>
+      </div>
+
+      <div class="divider">or upload</div>
+
+      <input type="file" id="fileInput" accept=".txt,.pdf" />
+      <button id="uploadBtn">Upload &amp; Index</button>
+      <p id="uploadStatus" class="status"></p>
+    </section>
+
+    <section class="card">
+      <h2>2. Ask a question</h2>
+      <textarea id="questionInput" rows="3" placeholder="e.g. What is the NS1 antigen result and what does the report conclude?"></textarea>
+      <button id="askBtn" disabled>Ask</button>
+      <p id="askStatus" class="status"></p>
+    </section>
+
+    <section class="card" id="answerCard" style="display:none;">
+      <h2>Answer</h2>
+      <div id="answer" class="answer"></div>
+      <p id="piiNote" class="pii"></p>
+      <h3>Evidence (retrieved chunks)</h3>
+      <div id="evidence"></div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Synthetic data only. Not medical advice. Responsible-AI controls applied (PII redaction + grounding).</p>
+  </footer>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
