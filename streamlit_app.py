@@ -250,10 +250,11 @@ st.markdown(
       /* ---------- Status badges ---------- */
       .badge { display: inline-block; padding: 3px 12px; border-radius: 999px;
                font-size: .76rem; font-weight: 700; }
-      .b-good  { background: #dcfce7; color: #15803d; border: 1px solid #86efac; }
-      .b-watch { background: #fef9c3; color: #a16207; border: 1px solid #fde047; }
-      .b-alert { background: #fee2e2; color: #b91c1c; border: 1px solid #fca5a5;
-                 animation: pulse 1.8s infinite; }
+      .b-green  { background: #dcfce7; color: #15803d; border: 1px solid #86efac; }
+      .b-red    { background: #fee2e2; color: #b91c1c; border: 1px solid #fca5a5; }
+      .b-yellow { background: #fef9c3; color: #a16207; border: 1px solid #fde047; }
+      .b-orange { background: #ffedd5; color: #c2410c; border: 1px solid #fdba74; }
+      .b-grey   { background: #f1f5f9; color: #475569; border: 1px solid #cbd5e1; }
 
       /* ---------- Assessment banner ---------- */
       .assess { border-radius: 12px; padding: 12px 16px; font-size: .94rem; margin: 10px 0 6px;
@@ -355,7 +356,15 @@ st.markdown(
 
 col_main, col_report = st.columns([3, 2], gap="large")
 
-_BADGE_CLASS = {"Good": "b-good", "Watch": "b-watch", "Alert": "b-alert"}
+# One fixed color per status word.
+#   Positive / Normal -> green, Negative -> red, Low -> yellow, High -> orange
+_BADGE_CLASS = {
+    "Positive": "b-green",
+    "Normal": "b-green",
+    "Negative": "b-red",
+    "Low": "b-yellow",
+    "High": "b-orange",
+}
 
 
 def recommendations_for(parsed: dict) -> list[str]:
@@ -397,7 +406,7 @@ with col_report:
             html = ['<table class="rpt"><tr><th>Test</th><th>Result</th>'
                     '<th>Reference</th><th>Status</th></tr>']
             for r in parsed["rows"]:
-                cls = _BADGE_CLASS.get(r["verdict"], "b-watch")
+                cls = _BADGE_CLASS.get(r["status"], "b-grey")
                 html.append(
                     f'<tr><td>{r["test"]}</td><td>{r["value"]}</td>'
                     f'<td>{r["range"]}</td>'
