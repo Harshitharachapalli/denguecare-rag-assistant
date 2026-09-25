@@ -1,55 +1,34 @@
-======================================================================
-                        LIFELINE CLINICAL LABS                        
-                   NABL Accredited | ISO 15189:2012                   
-             Pune | www.demo-lab.example | +91-XXXXXXXXXX             
-======================================================================
-                        DENGUE DIAGNOSTIC REPORT
-                (Synthetic sample - not real patient data)
-----------------------------------------------------------------------
-Patient Name   : Sameer Patel                 Report No.   : DL-2608-0028
-Age / Sex      : 52 Yrs / Male                UHID         : UH611945
-Referred By    : Self / Walk-in
-Sample Barcode : 6237376063                   Specimen     : Serum / EDTA Whole Blood
-Collected On   : 23-Aug-2026 16:00            Reported On  : 24-Aug-2026 04:00
-----------------------------------------------------------------------
-CLINICAL NOTES
-  Fever x 5 day(s). Sent for dengue workup and complete blood count.
+SYNTHETIC DENGUE TEST REPORT (SAMPLE - NOT REAL PATIENT DATA)
+==============================================================
+Report ID       : SYN-DENG-0028
+Patient (alias) : Patient 028
+Age / Sex       : 41 / Male
+Location        : Delhi (synthetic)
+Collection Date : 2026-09-05
+Reporting Lab   : Synthetic Diagnostics (Demo)
 
-----------------------------------------------------------------------
-DENGUE SEROLOGY / ANTIGEN
-----------------------------------------------------------------------
-  Test                              Result        Method
-  Dengue NS1 Antigen                Positive      ELISA / Rapid Immunoassay
-  Dengue IgM Antibody               Positive      ELISA
-  Dengue IgG Antibody               Positive      ELISA
-  (Reference: Non-reactive / Negative)
+CLINICAL HISTORY
+----------------
+Fever for 4 day(s). Reported symptoms: joint pain, headache, mild bleeding gums, body ache.
 
-----------------------------------------------------------------------
-COMPLETE BLOOD COUNT (CBC)
-----------------------------------------------------------------------
-  Investigation           Result          Unit        Bio. Ref. Range   Flag
-  Hemoglobin              13.4            g/dL        12.0 - 16.0       Normal
-  Total WBC Count         3,456           /uL         4,000 - 11,000    Low
-  Platelet Count          64,057          /uL         150,000 - 410,000 Low
-  RBC Count               5.73            mill/uL     4.2 - 5.9         Normal
-  Hematocrit (PCV)        48%             %           36 - 50           Normal
-  Method: Automated 5-part Haematology Analyzer
+SEROLOGY / ANTIGEN
+------------------
+Dengue NS1 Antigen      : POSITIVE
+Dengue IgM Antibody     : POSITIVE
+Dengue IgG Antibody     : POSITIVE
 
-----------------------------------------------------------------------
+COMPLETE BLOOD COUNT
+--------------------
+Hemoglobin              : 12.6 g/dL     (Ref 12.0 - 16.0)
+Total WBC Count         : 2,943 /uL    (Ref 4,000 - 11,000)  LOW
+Platelet Count          : 29,099 /uL   (Ref 150,000 - 410,000)  LOW
+Hematocrit (PCV)        : 50%          (Ref 36 - 50)
+
 INTERPRETATION
-  Dengue NS1 antigen is reactive, indicating current dengue viral infection. Associated thrombocytopenia and leukopenia are commonly seen in the acute febrile phase. Serial platelet monitoring is advised.
+--------------
+NS1 positive with thrombocytopenia (low platelets) is consistent with an acute dengue infection. Close monitoring is advised.
 
-----------------------------------------------------------------------
-COMMENTS
-  - Results should be correlated with clinical findings and other
-    investigations. Serological cross-reactivity may occur with other
-    flaviviruses.
-  - This is a SYNTHETIC report generated for a software demonstration and
-    must not be used for medical decisions.
-
-----------------------------------------------------------------------
-  Verified & Authorized by
-  Dr. Neha Kulkarni, MD (Pathology)
-
-  *** End of Report ***
-======================================================================
+RECOMMENDATION (INFORMATIONAL ONLY)
+-----------------------------------
+Clinical correlation advised. This is synthetic demonstration data and not
+medical advice.

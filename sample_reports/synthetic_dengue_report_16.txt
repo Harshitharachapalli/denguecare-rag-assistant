@@ -1,55 +1,34 @@
-======================================================================
-                        MEDITRUST DIAGNOSTICS                         
-                   NABL Accredited | ISO 15189:2012                   
-          Hyderabad | www.demo-lab.example | +91-XXXXXXXXXX           
-======================================================================
-                        DENGUE DIAGNOSTIC REPORT
-                (Synthetic sample - not real patient data)
-----------------------------------------------------------------------
-Patient Name   : Karthik Reddy                Report No.   : DL-2608-0016
-Age / Sex      : 16 Yrs / Male                UHID         : UH395442
-Referred By    : Dr. S. Menon, MD (General Medicine)
-Sample Barcode : 3597724331                   Specimen     : Serum / EDTA Whole Blood
-Collected On   : 14-Aug-2026 22:00            Reported On  : 15-Aug-2026 11:00
-----------------------------------------------------------------------
-CLINICAL NOTES
-  Fever x 3 day(s). Sent for dengue workup and complete blood count.
+SYNTHETIC DENGUE TEST REPORT (SAMPLE - NOT REAL PATIENT DATA)
+==============================================================
+Report ID       : SYN-DENG-0016
+Patient (alias) : Patient 016
+Age / Sex       : 33 / Male
+Location        : Pune (synthetic)
+Collection Date : 2026-09-07
+Reporting Lab   : TestData Diagnostics Center
 
-----------------------------------------------------------------------
-DENGUE SEROLOGY / ANTIGEN
-----------------------------------------------------------------------
-  Test                              Result        Method
-  Dengue NS1 Antigen                Negative      ELISA / Rapid Immunoassay
-  Dengue IgM Antibody               Negative      ELISA
-  Dengue IgG Antibody               Negative      ELISA
-  (Reference: Non-reactive / Negative)
+CLINICAL HISTORY
+----------------
+Fever for 4 day(s). Reported symptoms: retro-orbital pain, headache, joint pain, rash.
 
-----------------------------------------------------------------------
-COMPLETE BLOOD COUNT (CBC)
-----------------------------------------------------------------------
-  Investigation           Result          Unit        Bio. Ref. Range   Flag
-  Hemoglobin              15.0            g/dL        12.0 - 16.0       Normal
-  Total WBC Count         10,131          /uL         4,000 - 11,000    Normal
-  Platelet Count          208,371         /uL         150,000 - 410,000 Normal
-  RBC Count               4.86            mill/uL     4.2 - 5.9         Normal
-  Hematocrit (PCV)        42%             %           36 - 50           Normal
-  Method: Automated 5-part Haematology Analyzer
+SEROLOGY / ANTIGEN
+------------------
+Dengue NS1 Antigen      : POSITIVE
+Dengue IgM Antibody     : POSITIVE
+Dengue IgG Antibody     : POSITIVE
 
-----------------------------------------------------------------------
+COMPLETE BLOOD COUNT
+--------------------
+Hemoglobin              : 15.7 g/dL     (Ref 12.0 - 16.0)
+Total WBC Count         : 2,823 /uL    (Ref 4,000 - 11,000)  LOW
+Platelet Count          : 80,637 /uL   (Ref 150,000 - 410,000)  LOW
+Hematocrit (PCV)        : 36%          (Ref 36 - 50)
+
 INTERPRETATION
-  Dengue NS1 antigen, IgM and IgG antibodies are non-reactive with a normal haemogram. No laboratory evidence of dengue infection in this sample. Repeat testing may be considered if clinically indicated.
+--------------
+NS1 positive with thrombocytopenia (low platelets) is consistent with an acute dengue infection. Close monitoring is advised.
 
-----------------------------------------------------------------------
-COMMENTS
-  - Results should be correlated with clinical findings and other
-    investigations. Serological cross-reactivity may occur with other
-    flaviviruses.
-  - This is a SYNTHETIC report generated for a software demonstration and
-    must not be used for medical decisions.
-
-----------------------------------------------------------------------
-  Verified & Authorized by
-  Dr. Neha Kulkarni, MD (Pathology)
-
-  *** End of Report ***
-======================================================================
+RECOMMENDATION (INFORMATIONAL ONLY)
+-----------------------------------
+Clinical correlation advised. This is synthetic demonstration data and not
+medical advice.

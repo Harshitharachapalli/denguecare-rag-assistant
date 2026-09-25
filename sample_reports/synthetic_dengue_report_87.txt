@@ -1,0 +1,34 @@
+SYNTHETIC DENGUE TEST REPORT (SAMPLE - NOT REAL PATIENT DATA)
+==============================================================
+Report ID       : SYN-DENG-0087
+Patient (alias) : Patient 087
+Age / Sex       : 57 / Male
+Location        : Mumbai (synthetic)
+Collection Date : 2026-08-27
+Reporting Lab   : DemoCare Pathology Labs
+
+CLINICAL HISTORY
+----------------
+Fever for 7 day(s). Reported symptoms: headache, body ache, rash, mild bleeding gums.
+
+SEROLOGY / ANTIGEN
+------------------
+Dengue NS1 Antigen      : POSITIVE
+Dengue IgM Antibody     : NEGATIVE
+Dengue IgG Antibody     : POSITIVE
+
+COMPLETE BLOOD COUNT
+--------------------
+Hemoglobin              : 13.0 g/dL     (Ref 12.0 - 16.0)
+Total WBC Count         : 2,300 /uL    (Ref 4,000 - 11,000)  LOW
+Platelet Count          : 107,819 /uL   (Ref 150,000 - 410,000)  LOW
+Hematocrit (PCV)        : 47%          (Ref 36 - 50)
+
+INTERPRETATION
+--------------
+NS1 positive with thrombocytopenia (low platelets) is consistent with an acute dengue infection. Close monitoring is advised.
+
+RECOMMENDATION (INFORMATIONAL ONLY)
+-----------------------------------
+Clinical correlation advised. This is synthetic demonstration data and not
+medical advice.

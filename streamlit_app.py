@@ -74,12 +74,21 @@ def parse_report(text: str) -> dict:
         except ValueError:
             return None
 
-    # Patterns tolerate both "Field : value" and "Field    value" layouts.
+    # Patterns tolerate both the simple "Field : value" layout and the
+    # pathology "Field    value" layout.
+    def field(pattern):
+        """Capture a value up to two-or-more spaces or end of line."""
+        m = re.search(pattern + r"[:]?\s*(.+)", text, re.IGNORECASE)
+        if not m:
+            return None
+        # Trim at the first run of 2+ spaces (handles side-by-side columns).
+        return re.split(r"\s{2,}", m.group(1).strip())[0].strip()
+
     meta = {
-        "Report No.": find(r"Report No\.?\s*[:]?\s*(\S+)"),
-        "Patient": find(r"Patient Name\s*[:]?\s*(.+?)\s{2,}"),
-        "Age / Sex": find(r"Age / Sex\s*[:]?\s*(.+?)\s{2,}"),
-        "Collected": find(r"Collected On\s*[:]?\s*(.+?)\s{2,}"),
+        "Report ID": field(r"Report (?:ID|No\.?)\s*"),
+        "Patient": field(r"Patient(?: \(alias\)| Name)\s*"),
+        "Age / Sex": field(r"Age / Sex\s*"),
+        "Date": field(r"(?:Collection Date|Collected On)\s*"),
     }
     meta = {k: v for k, v in meta.items() if v}
 

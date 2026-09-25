@@ -1,0 +1,34 @@
+SYNTHETIC DENGUE TEST REPORT (SAMPLE - NOT REAL PATIENT DATA)
+==============================================================
+Report ID       : SYN-DENG-0053
+Patient (alias) : Patient 053
+Age / Sex       : 3 / Female
+Location        : Pune (synthetic)
+Collection Date : 2026-08-20
+Reporting Lab   : MockMed Clinical Laboratory
+
+CLINICAL HISTORY
+----------------
+Fever for 4 day(s). Reported symptoms: headache, retro-orbital pain.
+
+SEROLOGY / ANTIGEN
+------------------
+Dengue NS1 Antigen      : POSITIVE
+Dengue IgM Antibody     : POSITIVE
+Dengue IgG Antibody     : POSITIVE
+
+COMPLETE BLOOD COUNT
+--------------------
+Hemoglobin              : 15.4 g/dL     (Ref 12.0 - 16.0)
+Total WBC Count         : 2,267 /uL    (Ref 4,000 - 11,000)  LOW
+Platelet Count          : 82,616 /uL   (Ref 150,000 - 410,000)  LOW
+Hematocrit (PCV)        : 46%          (Ref 36 - 50)
+
+INTERPRETATION
+--------------
+NS1 positive with thrombocytopenia (low platelets) is consistent with an acute dengue infection. Close monitoring is advised.
+
+RECOMMENDATION (INFORMATIONAL ONLY)
+-----------------------------------
+Clinical correlation advised. This is synthetic demonstration data and not
+medical advice.
