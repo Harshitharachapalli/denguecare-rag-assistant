@@ -175,55 +175,138 @@ for key, default in {
         st.session_state[key] = default
 
 
-# Minimal, restrained styling.
+# Modern, animated styling.
 st.markdown(
     """
     <style>
-      .block-container { max-width: 1080px; padding-top: 2rem; }
+      /* ---------- App background: deep indigo -> teal aurora ---------- */
+      .stApp {
+        background:
+          radial-gradient(1200px 600px at 10% -10%, rgba(99,102,241,.25), transparent 60%),
+          radial-gradient(1000px 500px at 110% 10%, rgba(20,184,166,.22), transparent 55%),
+          linear-gradient(160deg, #0b1220 0%, #111a2e 45%, #0e1626 100%);
+        background-attachment: fixed;
+        color: #e5e9f0;
+      }
+      .block-container { max-width: 1160px; padding-top: 1.4rem; }
+      h1, h2, h3, h4, p, span, label, div { color: #e5e9f0; }
+
+      /* ---------- Animations ---------- */
+      @keyframes rise { from {opacity:0; transform: translateY(14px);} to {opacity:1; transform:none;} }
+      @keyframes glow { 0%,100%{filter:drop-shadow(0 0 6px rgba(96,165,250,.5));}
+                        50%{filter:drop-shadow(0 0 16px rgba(45,212,191,.7));} }
+      @keyframes pulse { 0%{box-shadow:0 0 0 0 rgba(248,113,113,.5);}
+                         70%{box-shadow:0 0 0 8px rgba(248,113,113,0);}
+                         100%{box-shadow:0 0 0 0 rgba(248,113,113,0);} }
+      @keyframes shimmer { 0%{background-position:-400px 0;} 100%{background-position:400px 0;} }
+
+      /* ---------- Hero header ---------- */
+      .hero {
+        background: linear-gradient(120deg, rgba(59,130,246,.20), rgba(20,184,166,.18));
+        border: 1px solid rgba(148,163,184,.22);
+        border-radius: 20px;
+        padding: 22px 28px;
+        margin-bottom: 20px;
+        animation: rise .5s ease both;
+        backdrop-filter: blur(8px);
+      }
+      .hero h1 {
+        margin: 0; font-size: 2rem; font-weight: 800; letter-spacing: -.5px;
+        background: linear-gradient(90deg, #60a5fa, #2dd4bf, #a78bfa);
+        -webkit-background-clip: text; background-clip: text; color: transparent;
+        animation: glow 3.5s ease-in-out infinite;
+      }
+      .hero p { margin: 8px 0 0; color: #b8c2d4; font-size: .98rem; }
+
+      /* ---------- Glass cards (Streamlit columns) ---------- */
+      div[data-testid="column"] > div {
+        background: rgba(255,255,255,.045);
+        border: 1px solid rgba(148,163,184,.18);
+        border-radius: 18px;
+        padding: 20px 22px;
+        box-shadow: 0 10px 30px rgba(0,0,0,.35);
+        backdrop-filter: blur(10px);
+        animation: rise .55s ease both;
+        transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+      }
+      div[data-testid="column"] > div:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 16px 40px rgba(0,0,0,.45);
+        border-color: rgba(96,165,250,.4);
+      }
+
+      /* ---------- Answer box ---------- */
       .answer {
-        background: #f7f9fc;
-        border: 1px solid #e4e8ef;
-        border-radius: 6px;
-        padding: 14px 16px;
-        line-height: 1.55;
-        white-space: pre-wrap;
+        background: linear-gradient(135deg, rgba(59,130,246,.14), rgba(20,184,166,.12));
+        border: 1px solid rgba(96,165,250,.3);
+        border-left: 4px solid #60a5fa;
+        border-radius: 12px; padding: 16px 18px; line-height: 1.6;
+        white-space: pre-wrap; animation: rise .4s ease both;
       }
       .evi {
-        border-left: 3px solid #d0d7e2;
-        padding: 6px 12px;
-        margin-bottom: 8px;
-        color: #46505f;
-        font-size: .88rem;
-        white-space: pre-wrap;
+        border-left: 3px solid #334155;
+        padding: 8px 12px; margin-bottom: 8px; color: #aeb9cc;
+        font-size: .86rem; white-space: pre-wrap;
+        background: rgba(255,255,255,.03); border-radius: 6px;
       }
-      .muted { color: #6b7280; font-size: .9rem; }
+      .muted { color: #94a3b8 !important; font-size: .9rem; }
 
-      table.rpt {
-        width: 100%; border-collapse: collapse; font-size: .9rem;
-        margin: 6px 0 10px;
-      }
+      /* ---------- Results table ---------- */
+      table.rpt { width: 100%; border-collapse: collapse; font-size: .9rem; margin: 8px 0 12px; }
       table.rpt th {
-        text-align: left; background: #f1f5f9; color: #334155;
-        padding: 8px 10px; border-bottom: 2px solid #e2e8f0; font-weight: 600;
+        text-align: left; padding: 10px 12px; font-weight: 700;
+        color: #cbd5e1; border-bottom: 2px solid rgba(148,163,184,.3);
+        text-transform: uppercase; font-size: .72rem; letter-spacing: .06em;
       }
       table.rpt td {
-        padding: 8px 10px; border-bottom: 1px solid #eef2f7; color: #1f2937;
+        padding: 10px 12px; border-bottom: 1px solid rgba(148,163,184,.12); color: #dbe2ec;
       }
+      table.rpt tr { transition: background .15s ease; }
+      table.rpt tbody tr:hover { background: rgba(96,165,250,.08); }
+
+      /* ---------- Status badges ---------- */
       .badge {
-        display: inline-block; padding: 2px 10px; border-radius: 999px;
-        font-size: .78rem; font-weight: 600;
+        display: inline-block; padding: 3px 12px; border-radius: 999px;
+        font-size: .76rem; font-weight: 700; letter-spacing: .02em;
       }
-      .b-good  { background: #dcfce7; color: #15803d; }
-      .b-watch { background: #fef9c3; color: #a16207; }
-      .b-alert { background: #fee2e2; color: #b91c1c; }
-      .assess {
-        border-radius: 6px; padding: 10px 14px; font-size: .92rem;
-        margin: 8px 0 4px;
+      .b-good  { background: rgba(34,197,94,.18);  color: #4ade80; border: 1px solid rgba(34,197,94,.45); }
+      .b-watch { background: rgba(234,179,8,.18);   color: #fbbf24; border: 1px solid rgba(234,179,8,.45); }
+      .b-alert { background: rgba(239,68,68,.20);   color: #f87171; border: 1px solid rgba(239,68,68,.5);
+                 animation: pulse 1.8s infinite; }
+
+      /* ---------- Assessment banner ---------- */
+      .assess { border-radius: 12px; padding: 12px 16px; font-size: .94rem; margin: 10px 0 6px;
+                animation: rise .5s ease both; }
+      .assess-alert { background: rgba(239,68,68,.12);  border: 1px solid rgba(248,113,113,.5); color: #fca5a5; }
+      .assess-watch { background: rgba(234,179,8,.12);  border: 1px solid rgba(250,204,21,.5); color: #fde68a; }
+      .assess-good  { background: rgba(34,197,94,.12);  border: 1px solid rgba(74,222,128,.5); color: #bbf7d0; }
+
+      /* ---------- Buttons ---------- */
+      .stButton > button {
+        border-radius: 12px; font-weight: 700; border: 0; color: #fff !important;
+        background: linear-gradient(120deg, #6366f1, #14b8a6);
+        transition: transform .08s ease, box-shadow .2s ease, filter .2s ease;
+        box-shadow: 0 8px 20px rgba(99,102,241,.35);
       }
-      .assess-alert { background: #fef2f2; border: 1px solid #fecaca; color: #991b1b; }
-      .assess-watch { background: #fffbeb; border: 1px solid #fde68a; color: #92400e; }
-      .assess-good  { background: #f0fdf4; border: 1px solid #bbf7d0; color: #166534; }
-      #MainMenu, footer { visibility: hidden; }
+      .stButton > button:hover { transform: translateY(-2px); filter: brightness(1.08);
+        box-shadow: 0 12px 26px rgba(20,184,166,.4); }
+      .stButton > button:active { transform: translateY(0); }
+
+      /* ---------- Inputs / selects ---------- */
+      .stTextInput input, .stSelectbox div[data-baseweb="select"] > div {
+        background: rgba(255,255,255,.06) !important;
+        border-radius: 10px !important; color: #e5e9f0 !important;
+        border: 1px solid rgba(148,163,184,.25) !important;
+      }
+
+      /* ---------- Sidebar ---------- */
+      section[data-testid="stSidebar"] {
+        background: linear-gradient(180deg, #0a0f1c 0%, #0f1728 100%);
+        border-right: 1px solid rgba(148,163,184,.12);
+      }
+      section[data-testid="stSidebar"] * { color: #cbd5e1 !important; }
+
+      #MainMenu, footer, header[data-testid="stHeader"] { visibility: hidden; }
     </style>
     """,
     unsafe_allow_html=True,
@@ -280,10 +363,14 @@ with st.sidebar:
 
 
 # Main area.
-st.title("Dengue Report Assistant")
 st.markdown(
-    '<p class="muted">Ask questions about a dengue test report and get answers '
-    "based on the report's contents.</p>",
+    """
+    <div class="hero">
+      <h1>Dengue Report Intelligence</h1>
+      <p>Load a dengue lab report, review the analyzed results, and ask
+      natural-language questions answered from the report itself.</p>
+    </div>
+    """,
     unsafe_allow_html=True,
 )
 
