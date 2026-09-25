@@ -1,34 +1,55 @@
-SYNTHETIC DENGUE TEST REPORT (SAMPLE - NOT REAL PATIENT DATA)
-==============================================================
-Report ID       : SYN-DENG-0029
-Patient (alias) : Patient 029
-Age / Sex       : 24 / Female
-Location        : Mumbai (synthetic)
-Collection Date : 2026-09-17
-Reporting Lab   : Synthetic Diagnostics (Demo)
+======================================================================
+                        LIFELINE CLINICAL LABS                        
+                   NABL Accredited | ISO 15189:2012                   
+             Pune | www.demo-lab.example | +91-XXXXXXXXXX             
+======================================================================
+                        DENGUE DIAGNOSTIC REPORT
+                (Synthetic sample - not real patient data)
+----------------------------------------------------------------------
+Patient Name   : Arjun Gupta                  Report No.   : DL-2608-0029
+Age / Sex      : 20 Yrs / Male                UHID         : UH372793
+Referred By    : Dr. P. Desai, MD (Internal Medicine)
+Sample Barcode : 6923206003                   Specimen     : Serum / EDTA Whole Blood
+Collected On   : 20-Aug-2026 22:00            Reported On  : 21-Aug-2026 04:00
+----------------------------------------------------------------------
+CLINICAL NOTES
+  Fever x 1 day(s). Sent for dengue workup and complete blood count.
 
-CLINICAL HISTORY
-----------------
-Fever for 3 day(s). Reported symptoms: mild bleeding gums, headache.
+----------------------------------------------------------------------
+DENGUE SEROLOGY / ANTIGEN
+----------------------------------------------------------------------
+  Test                              Result        Method
+  Dengue NS1 Antigen                Positive      ELISA / Rapid Immunoassay
+  Dengue IgM Antibody               Positive      ELISA
+  Dengue IgG Antibody               Positive      ELISA
+  (Reference: Non-reactive / Negative)
 
-SEROLOGY / ANTIGEN
-------------------
-Dengue NS1 Antigen      : POSITIVE
-Dengue IgM Antibody     : NEGATIVE
-Dengue IgG Antibody     : POSITIVE
+----------------------------------------------------------------------
+COMPLETE BLOOD COUNT (CBC)
+----------------------------------------------------------------------
+  Investigation           Result          Unit        Bio. Ref. Range   Flag
+  Hemoglobin              11.6            g/dL        12.0 - 16.0       Low
+  Total WBC Count         3,352           /uL         4,000 - 11,000    Low
+  Platelet Count          119,775         /uL         150,000 - 410,000 Low
+  RBC Count               4.33            mill/uL     4.2 - 5.9         Normal
+  Hematocrit (PCV)        47%             %           36 - 50           Normal
+  Method: Automated 5-part Haematology Analyzer
 
-COMPLETE BLOOD COUNT
---------------------
-Hemoglobin              : 11.2 g/dL     (Ref 12.0 - 16.0)
-Total WBC Count         : 3,894 /uL    (Ref 4,000 - 11,000)  LOW
-Platelet Count          : 77,199 /uL   (Ref 150,000 - 410,000)  LOW
-Hematocrit (PCV)        : 40%          (Ref 36 - 50)
-
+----------------------------------------------------------------------
 INTERPRETATION
---------------
-NS1 positive with thrombocytopenia (low platelets) is consistent with an acute dengue infection. Close monitoring is advised.
+  Dengue NS1 antigen is reactive, indicating current dengue viral infection. Associated thrombocytopenia and leukopenia are commonly seen in the acute febrile phase. Serial platelet monitoring is advised.
 
-RECOMMENDATION (INFORMATIONAL ONLY)
------------------------------------
-Clinical correlation advised. This is synthetic demonstration data and not
-medical advice.
+----------------------------------------------------------------------
+COMMENTS
+  - Results should be correlated with clinical findings and other
+    investigations. Serological cross-reactivity may occur with other
+    flaviviruses.
+  - This is a SYNTHETIC report generated for a software demonstration and
+    must not be used for medical decisions.
+
+----------------------------------------------------------------------
+  Verified & Authorized by
+  Dr. Neha Kulkarni, MD (Pathology)
+
+  *** End of Report ***
+======================================================================

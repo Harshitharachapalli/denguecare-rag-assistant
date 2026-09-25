@@ -74,36 +74,38 @@ def parse_report(text: str) -> dict:
         except ValueError:
             return None
 
+    # Patterns tolerate both "Field : value" and "Field    value" layouts.
     meta = {
-        "Report ID": find(r"Report ID\s*:\s*(.+)"),
-        "Age / Sex": find(r"Age / Sex\s*:\s*(.+)"),
-        "Collection date": find(r"Collection Date\s*:\s*(.+)"),
-        "Lab": find(r"Reporting Lab\s*:\s*(.+)"),
+        "Report No.": find(r"Report No\.?\s*[:]?\s*(\S+)"),
+        "Patient": find(r"Patient Name\s*[:]?\s*(.+?)\s{2,}"),
+        "Age / Sex": find(r"Age / Sex\s*[:]?\s*(.+?)\s{2,}"),
+        "Collected": find(r"Collected On\s*[:]?\s*(.+?)\s{2,}"),
     }
     meta = {k: v for k, v in meta.items() if v}
 
     rows = []
 
-    # --- Serology / antigen: qualitative POSITIVE/NEGATIVE ---
+    # --- Serology / antigen: qualitative Positive/Negative ---
     serology = {
-        "NS1 Antigen": find(r"NS1 Antigen\s*:\s*(\w+)"),
-        "IgM Antibody": find(r"IgM Antibody\s*:\s*(\w+)"),
-        "IgG Antibody": find(r"IgG Antibody\s*:\s*(\w+)"),
+        "NS1 Antigen": find(r"NS1 Antigen\s*[:]?\s+(Positive|Negative|Reactive|Non-reactive)"),
+        "IgM Antibody": find(r"IgM Antibody\s*[:]?\s+(Positive|Negative|Reactive|Non-reactive)"),
+        "IgG Antibody": find(r"IgG Antibody\s*[:]?\s+(Positive|Negative|Reactive|Non-reactive)"),
     }
     for test, val in serology.items():
         if not val:
             continue
-        val_up = val.upper()
-        if val_up == "POSITIVE":
+        positive = val.upper() in ("POSITIVE", "REACTIVE")
+        if positive:
             # NS1 / IgM positive => active concern (Alert); IgG positive => past exposure (Watch)
             status = "Positive"
             verdict = "Watch" if test == "IgG Antibody" else "Alert"
         else:
             status, verdict = "Negative", "Good"
-        rows.append({"test": test, "value": val_up, "range": "Negative", "status": status, "verdict": verdict})
+        rows.append({"test": test, "value": status, "range": "Negative",
+                     "status": status, "verdict": verdict})
 
     # --- Numeric CBC values with ranges ---
-    plt = num(find(r"Platelet Count\s*:\s*([\d,]+)"))
+    plt = num(find(r"Platelet Count\s*[:]?\s+([\d,]+)"))
     if plt is not None:
         if plt < 150000:
             status, verdict = "Low", "Alert"
@@ -114,7 +116,7 @@ def parse_report(text: str) -> dict:
         rows.append({"test": "Platelet Count", "value": f"{int(plt):,} /uL",
                      "range": "150,000 - 410,000", "status": status, "verdict": verdict})
 
-    wbc = num(find(r"Total WBC Count\s*:\s*([\d,]+)"))
+    wbc = num(find(r"Total WBC Count\s*[:]?\s+([\d,]+)"))
     if wbc is not None:
         if wbc < 4000:
             status, verdict = "Low", "Watch"
@@ -125,7 +127,7 @@ def parse_report(text: str) -> dict:
         rows.append({"test": "Total WBC Count", "value": f"{int(wbc):,} /uL",
                      "range": "4,000 - 11,000", "status": status, "verdict": verdict})
 
-    hb = num(find(r"Hemoglobin\s*:\s*([\d.]+)"))
+    hb = num(find(r"Hemoglobin\s*[:]?\s+([\d.]+)"))
     if hb is not None:
         if hb < 12.0:
             status, verdict = "Low", "Watch"
@@ -136,7 +138,7 @@ def parse_report(text: str) -> dict:
         rows.append({"test": "Hemoglobin", "value": f"{hb} g/dL",
                      "range": "12.0 - 16.0", "status": status, "verdict": verdict})
 
-    hct = num(find(r"Hematocrit \(PCV\)\s*:\s*(\d+)"))
+    hct = num(find(r"Hematocrit \(PCV\)\s*[:]?\s+(\d+)"))
     if hct is not None:
         if hct < 36:
             status, verdict = "Low", "Watch"

@@ -1,34 +1,55 @@
-SYNTHETIC DENGUE TEST REPORT (SAMPLE - NOT REAL PATIENT DATA)
-==============================================================
-Report ID       : SYN-DENG-0035
-Patient (alias) : Patient 035
-Age / Sex       : 17 / Female
-Location        : Delhi (synthetic)
-Collection Date : 2026-09-11
-Reporting Lab   : MockMed Clinical Laboratory
+======================================================================
+                     METROPOLIS DEMO DIAGNOSTICS                      
+                   Accredited Reference Laboratory                    
+            Mumbai | www.demo-lab.example | +91-XXXXXXXXXX            
+======================================================================
+                        DENGUE DIAGNOSTIC REPORT
+                (Synthetic sample - not real patient data)
+----------------------------------------------------------------------
+Patient Name   : Aditya Rao                   Report No.   : DL-2609-0035
+Age / Sex      : 60 Yrs / Male                UHID         : UH332360
+Referred By    : Self / Walk-in
+Sample Barcode : 6339955011                   Specimen     : Serum / EDTA Whole Blood
+Collected On   : 17-Sep-2026 23:00            Reported On  : 18-Sep-2026 13:00
+----------------------------------------------------------------------
+CLINICAL NOTES
+  Fever x 6 day(s). Sent for dengue workup and complete blood count.
 
-CLINICAL HISTORY
-----------------
-Fever for 5 day(s). Reported symptoms: mild bleeding gums, fatigue, rash, nausea.
+----------------------------------------------------------------------
+DENGUE SEROLOGY / ANTIGEN
+----------------------------------------------------------------------
+  Test                              Result        Method
+  Dengue NS1 Antigen                Negative      ELISA / Rapid Immunoassay
+  Dengue IgM Antibody               Negative      ELISA
+  Dengue IgG Antibody               Negative      ELISA
+  (Reference: Non-reactive / Negative)
 
-SEROLOGY / ANTIGEN
-------------------
-Dengue NS1 Antigen      : NEGATIVE
-Dengue IgM Antibody     : NEGATIVE
-Dengue IgG Antibody     : POSITIVE
+----------------------------------------------------------------------
+COMPLETE BLOOD COUNT (CBC)
+----------------------------------------------------------------------
+  Investigation           Result          Unit        Bio. Ref. Range   Flag
+  Hemoglobin              14.7            g/dL        12.0 - 16.0       Normal
+  Total WBC Count         8,376           /uL         4,000 - 11,000    Normal
+  Platelet Count          251,736         /uL         150,000 - 410,000 Normal
+  RBC Count               4.69            mill/uL     4.2 - 5.9         Normal
+  Hematocrit (PCV)        45%             %           36 - 50           Normal
+  Method: Automated 5-part Haematology Analyzer
 
-COMPLETE BLOOD COUNT
---------------------
-Hemoglobin              : 12.4 g/dL     (Ref 12.0 - 16.0)
-Total WBC Count         : 9,077 /uL    (Ref 4,000 - 11,000)  NORMAL
-Platelet Count          : 296,518 /uL   (Ref 150,000 - 410,000)  NORMAL
-Hematocrit (PCV)        : 48%          (Ref 36 - 50)
-
+----------------------------------------------------------------------
 INTERPRETATION
---------------
-IgG positive with negative NS1/IgM and normal counts suggests past dengue exposure rather than active infection.
+  Dengue NS1 antigen, IgM and IgG antibodies are non-reactive with a normal haemogram. No laboratory evidence of dengue infection in this sample. Repeat testing may be considered if clinically indicated.
 
-RECOMMENDATION (INFORMATIONAL ONLY)
------------------------------------
-Clinical correlation advised. This is synthetic demonstration data and not
-medical advice.
+----------------------------------------------------------------------
+COMMENTS
+  - Results should be correlated with clinical findings and other
+    investigations. Serological cross-reactivity may occur with other
+    flaviviruses.
+  - This is a SYNTHETIC report generated for a software demonstration and
+    must not be used for medical decisions.
+
+----------------------------------------------------------------------
+  Verified & Authorized by
+  Dr. Rajesh Pillai, MD (Clinical Pathology)
+
+  *** End of Report ***
+======================================================================

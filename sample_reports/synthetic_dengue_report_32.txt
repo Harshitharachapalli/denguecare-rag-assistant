@@ -1,34 +1,55 @@
-SYNTHETIC DENGUE TEST REPORT (SAMPLE - NOT REAL PATIENT DATA)
-==============================================================
-Report ID       : SYN-DENG-0032
-Patient (alias) : Patient 032
-Age / Sex       : 57 / Female
-Location        : Pune (synthetic)
-Collection Date : 2026-08-21
-Reporting Lab   : MockMed Clinical Laboratory
+======================================================================
+                     METROPOLIS DEMO DIAGNOSTICS                      
+                   Accredited Reference Laboratory                    
+            Mumbai | www.demo-lab.example | +91-XXXXXXXXXX            
+======================================================================
+                        DENGUE DIAGNOSTIC REPORT
+                (Synthetic sample - not real patient data)
+----------------------------------------------------------------------
+Patient Name   : Rahul Nair                   Report No.   : DL-2608-0032
+Age / Sex      : 71 Yrs / Male                UHID         : UH172306
+Referred By    : Dr. P. Desai, MD (Internal Medicine)
+Sample Barcode : 2465576748                   Specimen     : Serum / EDTA Whole Blood
+Collected On   : 22-Aug-2026 14:00            Reported On  : 23-Aug-2026 06:00
+----------------------------------------------------------------------
+CLINICAL NOTES
+  Fever x 7 day(s). Sent for dengue workup and complete blood count.
 
-CLINICAL HISTORY
-----------------
-Fever for 6 day(s). Reported symptoms: rash, fatigue.
+----------------------------------------------------------------------
+DENGUE SEROLOGY / ANTIGEN
+----------------------------------------------------------------------
+  Test                              Result        Method
+  Dengue NS1 Antigen                Negative      ELISA / Rapid Immunoassay
+  Dengue IgM Antibody               Negative      ELISA
+  Dengue IgG Antibody               Negative      ELISA
+  (Reference: Non-reactive / Negative)
 
-SEROLOGY / ANTIGEN
-------------------
-Dengue NS1 Antigen      : NEGATIVE
-Dengue IgM Antibody     : NEGATIVE
-Dengue IgG Antibody     : NEGATIVE
+----------------------------------------------------------------------
+COMPLETE BLOOD COUNT (CBC)
+----------------------------------------------------------------------
+  Investigation           Result          Unit        Bio. Ref. Range   Flag
+  Hemoglobin              12.9            g/dL        12.0 - 16.0       Normal
+  Total WBC Count         8,515           /uL         4,000 - 11,000    Normal
+  Platelet Count          370,569         /uL         150,000 - 410,000 Normal
+  RBC Count               5.13            mill/uL     4.2 - 5.9         Normal
+  Hematocrit (PCV)        45%             %           36 - 50           Normal
+  Method: Automated 5-part Haematology Analyzer
 
-COMPLETE BLOOD COUNT
---------------------
-Hemoglobin              : 15.3 g/dL     (Ref 12.0 - 16.0)
-Total WBC Count         : 8,376 /uL    (Ref 4,000 - 11,000)  NORMAL
-Platelet Count          : 289,001 /uL   (Ref 150,000 - 410,000)  NORMAL
-Hematocrit (PCV)        : 39%          (Ref 36 - 50)
-
+----------------------------------------------------------------------
 INTERPRETATION
---------------
-NS1, IgM and IgG negative with normal platelet and WBC counts. No serological evidence of dengue in this sample.
+  Dengue NS1 antigen, IgM and IgG antibodies are non-reactive with a normal haemogram. No laboratory evidence of dengue infection in this sample. Repeat testing may be considered if clinically indicated.
 
-RECOMMENDATION (INFORMATIONAL ONLY)
------------------------------------
-Clinical correlation advised. This is synthetic demonstration data and not
-medical advice.
+----------------------------------------------------------------------
+COMMENTS
+  - Results should be correlated with clinical findings and other
+    investigations. Serological cross-reactivity may occur with other
+    flaviviruses.
+  - This is a SYNTHETIC report generated for a software demonstration and
+    must not be used for medical decisions.
+
+----------------------------------------------------------------------
+  Verified & Authorized by
+  Dr. Anjali Bose, MD, DNB (Pathology)
+
+  *** End of Report ***
+======================================================================
